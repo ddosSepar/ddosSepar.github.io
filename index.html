@@ -16,14 +16,14 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="url" class="form-label">Url</label>
-                                <input type="text" class="form-control" placeholder="url">
+                                <label for="url" class="form-label">Посилання</label>
+                                <input type="text" id="url" class="form-control" placeholder="url">
                             </div>
                             <div class="mb-3">
                                 <label for="threads" class="form-label">Threads</label>
-                                <input type="text" class="form-control" placeholder="3">
+                                <input type="text" id="threads" class="form-control" placeholder="">
                             </div>
-                            <p style="text-align: center;"><button type="button" class="btn btn-dark">Напад</button></p>
+                            <p style="text-align: center;"><button type="button" onClick="pizdaCazapam()" class="btn btn-dark">Напад</button></p>
                         </div>
                     </div>
                 </div>
@@ -31,5 +31,13 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function pizdaCazapam()
+            {
+                var a = document.getElementById("url").value;
+                var b = document.getElementById("threads").value;
+                window.location.href = "file:///D:/OpenServer/domains/ddos/attack.html?url=" + a + "&threads=" + b;
+            }
+        </script>
     </body>
 </html>
