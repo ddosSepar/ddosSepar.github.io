@@ -175,7 +175,7 @@ var browser = {
     }
 };
 
-function generate() {
+function generateUA() {
     var random = randomBrowserAndOS();
     return browser[random[0]](random[1]);
 };
@@ -197,5 +197,4 @@ function getQueryVariable(variable)
 
 var url = getQueryVariable('url');
 var threads = getQueryVariable('threads');
-
-alert(generate());
+var uaHead = generateUA();
