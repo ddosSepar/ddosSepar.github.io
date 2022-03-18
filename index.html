@@ -3,40 +3,50 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title></title>
-        <link rel="stylesheet" href="style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style_I.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.1/css/bootstrap.css">
+
     </head>
     <body>
-        <div class="container justify-content-center">
-            <div class="row">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4" style="margin-top:20%">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="url" class="form-label">Посилання</label>
-                                <input type="text" id="url" class="form-control" placeholder="url">
-                            </div>
-                            <div class="mb-3">
-                                <label for="threads" class="form-label">Threads</label>
-                                <input type="text" id="threads" class="form-control" placeholder="">
-                            </div>
-                            <p style="text-align: center;"><button type="button" onClick="pizdaCazapam()" class="btn btn-dark">Напад</button></p>
-                        </div>
+        <div class="container">
+           <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                 <div class="panel panel-login">
+                    <div class="panel-heading">
+                       <div class="panel-title text-center">:)</div>
+                       <hr>
                     </div>
-                </div>
-                <div class="col-md-4">
-                </div>
-            </div>
+                    <div class="panel-body">
+                       <div class="row">
+                          <div class="col-lg-12">
+                             <form id="login-form" class="col-lg-offset-1 col-lg-10" action="" method="post" role="form" style="display: block;">
+                                <div class="form-group input-group">
+                                   <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                   <input type="text" id="url" tabindex="1"  class="form-control" required placeholder=" ">
+                                   <label class="form-control-placeholder" for="url">Посилання</label>
+                                </div>
+                                <div class="form-group input-group">
+                                   <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                   <input type="text"  id="threads" tabindex="2" class="form-control" required placeholder=" ">
+        							<label class="form-control-placeholder" for="threads">Потоки</label>
+                                </div>
+                                <div class="col-sm-6 col-sm-offset-3">
+                                   <button onclick="pizdaCazapam()" tabindex="3" class="form-control btn btn-login"><i class="fas fa-sign-in-alt"></i> Напад</button>
+                                </div>
+                          </div>
+                          </form>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
         <script type="text/javascript">
             function pizdaCazapam()
             {
                 var a = document.getElementById("url").value;
                 var b = document.getElementById("threads").value;
-                window.location.href = "https://ddossepar.github.io/attack.html?url=" + a + "&threads=" + b;
+                window.location.href = "file:///D:/OpenServer/domains/ddos/attack.html?url=" + a + "&threads=" + b;
             }
         </script>
     </body>

